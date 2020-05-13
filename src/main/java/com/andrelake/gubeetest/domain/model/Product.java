@@ -1,9 +1,5 @@
 package com.andrelake.gubeetest.domain.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,11 +19,9 @@ public class Product {
 	private String productName;
 	private String description;
 	
-	@Embedded
-	private List<TargetMarket> targetMarket = new ArrayList<>();
+	private String[] targetMarket = new String[10];
 	
-	@Embedded
-	private List<Stack> stack = new ArrayList<>();
+	private String[] stack = new String[10];
 	
 	public Product() {
 	}
