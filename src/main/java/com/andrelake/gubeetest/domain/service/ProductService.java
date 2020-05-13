@@ -1,10 +1,12 @@
 package com.andrelake.gubeetest.domain.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.andrelake.gubeetest.domain.exception.ProductNotFoundException;
 import com.andrelake.gubeetest.domain.model.Product;
 import com.andrelake.gubeetest.domain.repository.ProductRepository;
 
@@ -26,5 +28,28 @@ public class ProductService {
 		
 		return prodRepository.saveAll(products);
 	}
+	
+	public List<Product> listByTargetMarketName(String text) {
+		
+		return prodRepository.findByTargetMarketContainingIgnoreCase(text);
+	}
 
+	public Product findById(Long id) {
+		
+		Product prod = findOrFail(id);
+		return prod;
+	}
+	
+	public Product findOrFail(Long id) {
+		
+		Product prod = prodRepository.findById(id)
+					.orElseThrow(() -> new ProductNotFoundException(id));
+		return prod;
+	}
+	
+	public void deleteById(Long id) {
+		
+		findOrFail(id);
+		prodRepository.deleteById(id);
+	}
 }
