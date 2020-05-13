@@ -2,7 +2,7 @@ package com.andrelake.gubeetest;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,11 +27,11 @@ public class GubeeTestApplication {
 		return args-> {
 			
 			ObjectMapper mapper = new ObjectMapper();
-			TypeReference<List<Product>> typeReference = new TypeReference<List<Product>>(){};
+			TypeReference<Set<Product>> typeReference = new TypeReference<Set<Product>>(){};
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/gubee-json.json");
 			
 			try {
-				List<Product> products = mapper.readValue(inputStream, typeReference);
+				Set<Product> products = mapper.readValue(inputStream, typeReference);
 				prodService.list(products);
 				System.out.println("Products saved!");
 				

@@ -1,6 +1,6 @@
 package com.andrelake.gubeetest.domain.service;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ProductService {
 		return prodRepository.save(prod);
 	}
 	
-	public Iterable<Product> list(List<Product> products) {
+	public Iterable<Product> list(Set<Product> products) {
 		
 		return prodRepository.saveAll(products);
 	}
