@@ -12,7 +12,10 @@ import com.andrelake.gubeetest.domain.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
 
-	@Query(value = "SELECT x FROM Product x WHERE x.targetMarket in :targetMarket")
-	List<Product> findByTargetMarketContainingIgnoreCase(@Param("targetMarket") String targetMarket);
+	@Query("SELECT x FROM Product x INNER JOIN x.targetMarket t WHERE t = :targetMarket")
+	List<Product> findByTargetMarketIgnoreCase(@Param("targetMarket") String market);
+	
+	@Query("SELECT x FROM Product x INNER JOIN x.stack s WHERE s = :stack")
+	List<Product> findByStackIgnoreCase(@Param("stack") String stack);
 	
 }

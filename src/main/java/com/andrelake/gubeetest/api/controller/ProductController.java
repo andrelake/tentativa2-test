@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,33 +38,42 @@ public class ProductController {
 	private ProductService prodService;
 	
 	@GetMapping("/list")
-	public Iterable<Product> list() {
+	public ResponseEntity<Iterable<Product>> list() {
 		
-		return prodService.list();
+		Iterable<Product> list = prodService.list();
+		return ResponseEntity.ok(list);
 	}
 	
 	@GetMapping("/{id}")
-	public Product findById(@PathVariable Long id) {
+	public ResponseEntity<Product> findById(@PathVariable Long id) {
 		
 		Product prod = prodService.findById(id);
-		return prod;
+		return ResponseEntity.ok(prod);
 	}
 	
-	@GetMapping("/list/pormarket")
-	public List<Product> listByTargetMarket(@RequestParam String text) {
+	@GetMapping("/pormarket")
+	public ResponseEntity<List<Product>> listByTargetMarket(@RequestParam String text) {
 		
-		return prodService.listByTargetMarketName(text);
+		List<Product> lista = prodService.listByTargetMarketName(text);
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("/porstack")
+	public ResponseEntity<List<Product>> listByStack(@RequestParam String text) {
+		
+		List<Product> lista = prodService.listByStackName(text);
+		return ResponseEntity.ok(lista);
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Product insert(@RequestBody Product product) {
+	public ResponseEntity<Product> insert(@RequestBody @Valid Product product) {
 		
-		return prodService.save(product);
+		product = prodService.save(product);
+		return ResponseEntity.status(HttpStatus.CREATED).body(product);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
+	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody @Valid Product product) {
 		
 		Product oldProduct = prodService.findById(id);
 		
@@ -74,7 +84,7 @@ public class ProductController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request) {
+	public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody @Valid Map<String, Object> fields, HttpServletRequest request) {
 		
 		Product actualProduct = prodService.findById(id);
 		

@@ -29,9 +29,16 @@ public class ProductService {
 		return prodRepository.saveAll(products);
 	}
 	
-	public List<Product> listByTargetMarketName(String text) {
+	public List<Product> listByTargetMarketName(String market) {
 		
-		return prodRepository.findByTargetMarketContainingIgnoreCase(text);
+		List<Product> lista = prodRepository.findByTargetMarketIgnoreCase(market);
+		return lista;
+	}
+	
+	public List<Product> listByStackName(String stack) {
+		
+		List<Product> lista = prodRepository.findByStackIgnoreCase(stack);
+		return lista;
 	}
 
 	public Product findById(Long id) {

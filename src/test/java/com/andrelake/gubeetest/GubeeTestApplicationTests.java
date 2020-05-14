@@ -3,6 +3,8 @@ package com.andrelake.gubeetest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +74,9 @@ class GubeeTestApplicationTests {
 	
 	public Product createProduct() {
 		
-		String[] stack = new String[] {"Spring", "NodeJS", "Java 11"};
-		String[] targetMarket = new String[] {"Banco", "Banco Digital"};
+		List<String> stack = List.of("Spring", "NodeJS", "Java 11");
+
+		List<String> targetMarket = List.of("Banco", "Banco Digital"); 
 		
 		Product prod = new Product();
 		prod.setProductName(NAME_PRODUCT_TEST);
