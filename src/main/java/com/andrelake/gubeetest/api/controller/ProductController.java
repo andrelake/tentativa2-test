@@ -84,7 +84,7 @@ public class ProductController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody @Valid Map<String, Object> fields, HttpServletRequest request) {
+	public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request) {
 		
 		Product actualProduct = prodService.findById(id);
 		
